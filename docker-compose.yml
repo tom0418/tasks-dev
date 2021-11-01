@@ -9,7 +9,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
     volumes:
-      - ./db/mysql:/var/lib/mysql
+      - mysql8:/var/lib/mysql
     networks:
       - default
   oauth-server:
@@ -25,10 +25,10 @@ services:
       - MYSQL_PASSWORD=password
     volumes:
       - ../oauth-server:/oauth-server:cached
-      - oauth-server-bundle:/usr/local/bundle
-      - oauth-server-node_modules:/oauth_manager_server/node_modules
-      - oauth-server-packs:/oauth_manager_server/public/packs
-      - oauth-server-rails_cache:/oauth_manager_server/tmp/cache
+      - oauth-server_bundle:/usr/local/bundle
+      - oauth-server_node_modules:/oauth_manager_server/node_modules
+      - oauth-server_packs:/oauth_manager_server/public/packs
+      - oauth-server_rails_cache:/oauth_manager_server/tmp/cache
     depends_on:
       - mysql8
     stdin_open: true
@@ -38,11 +38,13 @@ services:
     tmpfs:
       - /tmp
 volumes:
-  oauth-server-bundle:
+  mysql8:
     driver: local
-  oauth-server-node_modules:
+  oauth-server_bundle:
     driver: local
-  oauth-server-packs:
+  oauth-server_node_modules:
     driver: local
-  oauth-server-rails_cache:
+  oauth-server_packs:
+    driver: local
+  oauth-server_rails_cache:
     driver: local
